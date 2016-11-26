@@ -1,34 +1,28 @@
-import Koa from 'koa';
-import Router from 'koa-router';
-import serve from 'koa-static';
-import convert from 'koa-convert';
+import path from 'path';
+import express from 'express';
 
-const app = new Koa();
-const router = new Router();
+import webpack from 'webpack';
+import devMiddleware from 'webpack-dev-middleware';
+import hotMiddleware from 'webpack-hot-middleware';
+import webpackConfig from '../webpack/webpack.config.client.dev.babel';
 
-// x-response-time
-app.use(async function (ctx, next) {
-  const start = new Date();
-  await next();
-  const ms = new Date() - start;
-  ctx.set('X-Response-Time', `${ms}ms`);
+const app = express();
+const compiler = webpack(webpackConfig);
+
+app.use(devMiddleware(compiler, {
+  publicPath: webpackConfig.output.publicPath
+}));
+
+app.use(hotMiddleware(compiler));
+
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
 });
 
-app.use(async function (ctx, next) {
-  const start = new Date();
-  await next();
-  const ms = new Date() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}`);
-});
+app.listen(3000, function(err) {
+  if (err) {
+    return console.error(err);
+  }
 
-app.use(ctx => {
-  ctx.body = 'Hello Koa';
-});
-
-app
-  .use(router.routes())
-  .use(router.allowedMethods());
-
-app.listen(3000, () => {
-  console.log('Listening on port 3000 ');
-});
+  console.log('Listening at http://localhost:3000/');
+})
