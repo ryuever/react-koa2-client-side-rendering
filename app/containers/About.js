@@ -11,7 +11,7 @@ export default class About extends Component {
     const currentWeekday = localWeekdays[moment().weekday()];
     return (
       <div>
-        <span>Hello, If you like, please star on this project.</span>
+        <span>If you like, please star on this project.</span>
         <span>{`Today is ${currentWeekday}`}</span>
       </div>
     );

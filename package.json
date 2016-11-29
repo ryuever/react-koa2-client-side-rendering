@@ -8,6 +8,7 @@
     "build:dev": "webpack --config ./webpack/webpack.config.client.dev.babel.js --color --progress",
     "build:prod": "webpack --config ./webpack/webpack.config.client.prod.babel.js --color --display-modules --display-error-details",
     "start": "npm run start:dev",
+    "server": "NODE_ENV=development node index.js",
     "start:dev": "NODE_ENV=development npm run build:dev && NODE_ENV=development node index.js ",
     "start:prod": "npm run build:prod && pm2 index.js"
   },
