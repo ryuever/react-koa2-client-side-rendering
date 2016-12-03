@@ -1,15 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Route, hashHistory } from 'react-router'
+import { Router, Route, browserHistory } from 'react-router'
 import Routes from './routes';
+import './styles/main.css';
+// import './styles/modules/_card.css';
 
 render((
-  <Router history={hashHistory}>
+  <Router history={browserHistory}>
     {Routes}
   </Router>
 ), document.getElementById('app'))
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import App from './containers/App';
-
-// ReactDOM.render(<App />, document.getElementById('app'));
