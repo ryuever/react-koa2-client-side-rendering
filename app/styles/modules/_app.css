@@ -1,0 +1,20 @@
+body {
+  font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+
+  height: 100%;
+  width: 100%;
+  margin: 0px
+}
+
+#app {
+  background: #fff;
+}
+
+.ng-app {
+  max-width: 1000px !important;
+  margin: auto;
+  background: #84c1df;
+
+  border: 1px solid #eee;
+  box-shadow: 0 0 5px rgba(9, 2, 4, .35);
+}

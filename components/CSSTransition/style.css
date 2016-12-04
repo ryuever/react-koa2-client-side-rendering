@@ -1,0 +1,112 @@
+@define-extend animation-common {
+  animation-duration: 300ms;
+  animation-timing-function: ease;
+  animation-play-state: running;
+}
+
+@keyframes zoom-in {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoom-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+@keyframes dropdown-in {
+  0% {
+    opacity: .01;
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dropdown-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.zoom {
+  &-enter,
+  &-appear {
+    animation-name: zoom-in;
+    @extend animation-common;
+  }
+
+  &-leave {
+    animation-name: zoom-out;
+    @extend animation-common;
+  }
+}
+
+.dropdown {
+  &-enter,
+  &-appear {
+    animation-name: dropdown-in;
+    @extend animation-common;
+  }
+
+  &-leave {
+    animation-name: dropdown-out;
+    @extend animation-common;
+  }
+}
+
+.fade {
+  &-enter,
+  &-appear {
+    animation-name: fade-in;
+    @extend animation-common;
+  }
+
+  &-leave {
+    animation-name: fade-out;
+    @extend animation-common;
+  }
+}

@@ -12,7 +12,7 @@ import webpackConfig from '../../webpack/webpack.config.client.dev.babel';
 const app = new Koa();
 const router = new Router();
 
-app.use(convert(serve(path.join(__dirname, '..', '..', 'dist'))));
+app.use(convert(serve(path.join(__dirname, '..', '..', 'public'))));
 
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(webpackConfig);
@@ -30,22 +30,35 @@ app.use(async function (ctx, next) {
   await next();
   const ms = new Date() - start;
   ctx.set('X-Response-Time', `${ms}ms`);
+  console.log('set reponse', ms);
 });
 
 app.use(async function (ctx, next) {
+  console.log('pp00+++++');
   const start = new Date();
   await next();
+  console.log('finish');
   const ms = new Date() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}`);
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
-app.use(ctx => {
+// app.use(ctx => {
+//   console.log('ping ------------');
+//   ctx.body = "hello world";
+//   // ctx.type = 'html';
+//   // ctx.body = fs.createReadStream(path.join(__dirname, '..', '..', 'dist', 'index.html'));
+// });
+
+router.get("*", (ctx) => {
+  // console.log('any request ------- ');
+  // ctx.body = 'bingo';
   ctx.type = 'html';
   ctx.body = fs.createReadStream(path.join(__dirname, '..', '..', 'dist', 'index.html'));
-});
+})
 
 app
   .use(router.routes())
   .use(router.allowedMethods());
 
 export default app;
+app.router = router;

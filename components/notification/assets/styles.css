@@ -1,0 +1,54 @@
+@define-extend noti-anim-fade {
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.455, 0.030, 0.515, 0.955);
+}
+
+.notification {
+  &-fade {
+    &-enter {
+      @extend noti-anim-fade;
+      opacity: 0;
+      animation-play-state: paused;
+    }
+
+    &-leave {
+      @extend noti-anim-fade;
+      animation-play-state: paused;
+    }
+
+    &-enter-active {
+      animation-name: notiFadeIn;
+      animation-play-state: running;
+    }
+
+    &-leave-active {
+      animation-name: notiFadeOut;
+      animation-play-state: running;
+    }
+  }
+}
+
+@keyframes notiFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes notiFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+}

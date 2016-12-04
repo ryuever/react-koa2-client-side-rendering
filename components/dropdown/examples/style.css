@@ -1,0 +1,41 @@
+.dropdown-container {
+  margin-left: 300px;
+  margin-top: 300px;
+  width: 200px;
+
+  .layer-1 {
+    position: relative;
+    z-index: 10;
+  }
+
+  .layer-2 {
+    z-index: 11;
+    position: relative;
+    width: 100px;
+    height: 30px;
+    background: #eee;
+  }
+}
+
+.dropdown-back {
+  width: 100px;
+  height: 100px;
+
+  z-index: 1;
+  position: relative;
+  background: #eee;
+}
+
+.dropdown-extra {
+  z-index: 2;
+  height: 20px;
+  width: 100px;
+  background: #b5b1b1;
+  position: relative;
+}
+
+.overlay-list {
+  border: 1px solid #eee;
+  padding: 5px;
+  border-radius: 3px;
+}

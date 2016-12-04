@@ -1,0 +1,7 @@
+.ng-questionnaire {
+  width: 600px;
+  margin: auto;
+
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+}

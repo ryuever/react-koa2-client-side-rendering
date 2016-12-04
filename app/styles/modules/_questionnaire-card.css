@@ -1,0 +1,9 @@
+.questionanaire-card {
+  padding: 10px;
+
+  background: #eee;
+
+  &:hover {
+    transform: size(1.2);
+  }
+}

@@ -1,0 +1,37 @@
+.pagination {
+  margin-top: 15px;
+}
+
+.page {
+  &-divider {
+    padding: 0 5px;
+    color: #999;
+  }
+
+  &-jump-next {
+    &:hover {
+      & .icon-ellipsis::before {
+        cursor: pointer;
+        content: "»";
+        color: #2db7f5;
+      }
+    }
+  }
+
+  &-jump-prev {
+    &:hover {
+      & .icon-ellipsis::before {
+        content: "«";
+        cursor: pointer;
+        color: #2db7f5;
+      }
+    }
+  }
+}
+
+.display-text {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: auto;
+}

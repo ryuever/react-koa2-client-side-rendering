@@ -17,6 +17,16 @@ export default {
     filename: 'bundle.js',
   },
 
+  resolve: {
+    root: [path.join(__dirname, '..')],
+    modulesDirectories: ['node_modules'],
+    extensions: ['.js', '.css', '.pug', ''],
+    alias: {
+     'react-eva': path.join(__dirname, '..', 'components'),
+      'lib': path.join(__dirname, '..', 'lib'),     
+    }    
+  },
+
   module: {
     // preLoaders: [
     //   { test: /\.js$/, loader: 'eslint', exclude: /node_modules/ }
@@ -48,7 +58,7 @@ export default {
     }),
     new HtmlWebpackPlugin({
       title: 'Custom template using Handlebars',    
-      template: 'index.pug',
+      template: './index.pug',
       filename: 'index.html',
     }),
   ],  
