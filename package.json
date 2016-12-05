@@ -27,6 +27,7 @@
     "classnames": "^2.2.5",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^1.0.1",
+    "isomorphic-fetch": "^2.2.1",
     "koa": "^2.0.0-alpha.7",
     "koa-convert": "^1.2.0",
     "koa-router": "^7.0.1",

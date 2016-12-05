@@ -13,5 +13,5 @@ db.once('open', () => {
 const { UserSchema } = schemas;
 
 export default {
-  UserSchema: db.model('User', UserSchema),
+  User: db.model('User', UserSchema),
 };
