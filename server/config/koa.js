@@ -42,7 +42,6 @@ app.use(async (ctx, next) => {
 });
 
 // error handler 
-
 app.use(async (ctx, next) => {
   try{
     await next();
@@ -51,10 +50,10 @@ app.use(async (ctx, next) => {
       ctx.throw(404);
     }
   } catch(err) {
-    ctx.status = 500;
+    ctx.status = err.code;
     ctx.body = {
-      message: 'opps!!!!!',
-      error: err.message,
+      message: err.message.en,
+      code: err.code,
     };
   }
 })

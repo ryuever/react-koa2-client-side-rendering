@@ -1,30 +1,24 @@
 import db from '../initial/mongodb';
+import Err from '../utils/Err';
 const { User } = db;
 
 const postQuestionnaire = async(ctx, next) => {
   let $user = User.findOne(ctx.request.body).exec();
-  // console.log('ctx body ', ctx.request.body);
+  const { name } = ctx.request.body;
 
   await $user
     .then(function(existingUser){
       if(existingUser){
-        throw new Error('Dulplicate user');
+        throw new Err('CONFLICT', 'Dulplicate user');
       }
       let user = new User({
-        name: 'li',
+        name,
         nationality: 'China',
       });
 
       user.save();
       return ctx.body = 'insert successful';
     })
-    
-    // .catch((err)=>{
-    //   if (err){
-    //     console.log('error ', err);
-    //     return ctx.body = 'error';
-    //   }
-    // });
 };
 
 export default {
