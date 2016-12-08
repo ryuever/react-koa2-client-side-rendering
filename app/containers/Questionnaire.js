@@ -10,14 +10,14 @@ export default class Questionnaire extends Component {
   }
 
   handleSubmit() {
-    fetch("/questionnaire", {
+    fetch("/v1/questionnaire", {
       method: 'POST',
       headers: {
         Accept: 'application/json', 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: 'li',
+        name: 'ma',
       })
     });
   }

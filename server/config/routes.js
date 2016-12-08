@@ -7,6 +7,5 @@ const router = new Router({
 });
 
 router.post('*', Questionnaire.postQuestionnaire);
-// router.post('/postQuestionnaire', Questionnaire.postQuestionnaire);
 
 export default router;

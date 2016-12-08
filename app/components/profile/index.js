@@ -1,18 +1,6 @@
 import React, { Component } from 'react';
 import { FormField, Input, Radio } from 'react-eva';
 
-// export default class Profile extends Component {
-//   constructor(props) {
-//     super(props);
-//   }
-
-//   render() {
-//     return (
-//       <span>testing</span>
-//     )
-//   }
-// }
-
 export default class Profile extends Component {
   constructor(props) {
     super(props);
