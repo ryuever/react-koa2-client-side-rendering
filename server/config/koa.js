@@ -38,7 +38,7 @@ app.use(async (ctx, next) => {
   const start = new Date();
   await next();
   const ms = new Date() - start;
-  console.log(`${ctx.method} ${ctx.url} ${ctx.path} - ${ms}ms`);
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
 // error handler 
@@ -50,7 +50,7 @@ app.use(async (ctx, next) => {
       ctx.throw(404);
     }
   } catch(err) {
-    ctx.status = err.code;
+    ctx.status = err.code || 501;
     ctx.body = {
       message: err.message.en,
       code: err.code,

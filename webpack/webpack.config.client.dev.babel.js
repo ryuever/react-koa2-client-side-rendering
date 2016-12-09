@@ -56,6 +56,9 @@ export default {
         WEBPACK: true
       }
     }),
+    new webpack.DefinePlugin({
+      __DEV__: true
+    }),
     new HtmlWebpackPlugin({
       title: 'Custom template using Handlebars',    
       template: './index.pug',

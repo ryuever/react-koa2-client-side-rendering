@@ -3,8 +3,9 @@ import Card from '../components/card';
 import Profile from '../components/profile';
 // import { request as api } from 'lib/request';
 import fetch from 'isomorphic-fetch';
+import { connect } from 'react-redux';
 
-export default class Questionnaire extends Component {
+class Questionnaire extends Component {
   constructor(props) {
     super(props);
   }
@@ -25,7 +26,7 @@ export default class Questionnaire extends Component {
   render() {
     return (
       <div className="ng-questionnaire">
-        <Profile />
+        <Profile {...this.props}/>
         <button onClick={::this.handleSubmit}>
           提交
         </button>
@@ -33,3 +34,9 @@ export default class Questionnaire extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ questionnaire }) => ({
+  questionnaire
+});
+
+export default connect(mapStateToProps)(Questionnaire);

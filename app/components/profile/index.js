@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { FormField, Input, Radio } from 'react-eva';
+import * as actions from '../../actions/questionnaire';
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
+  }
+
+  handleUpdate({ target: { id, value} }) {
+    const { dispatch } = this.props;
+    dispatch(actions.updateInput({
+      [id]: value,
+    }));
   }
 
   render() {
@@ -12,7 +20,10 @@ export default class Profile extends Component {
         <FormField>
           <label>
             name
-            <Input placeholder="please enter your name"/>
+            <Input
+              id="name"
+              onChange={::this.handleUpdate} 
+              placeholder="please enter your name"/>
           </label>
         </FormField>
 
