@@ -6,7 +6,7 @@ class Request {
   }
 
   static post(url, data) {
-    return fetch('url', {
+    return fetch(url, {
       method: 'POST',
       headers: {
         Accept: 'application/json', 

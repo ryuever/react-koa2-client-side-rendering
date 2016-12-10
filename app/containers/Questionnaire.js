@@ -3,6 +3,8 @@ import Card from '../components/card';
 import Profile from '../components/profile';
 import fetch from 'isomorphic-fetch';
 import { connect } from 'react-redux';
+import * as actions from 'actions/questionnaire';
+import { Button } from 'react-eva';
 
 class Questionnaire extends Component {
   constructor(props) {
@@ -10,25 +12,23 @@ class Questionnaire extends Component {
   }
 
   handleSubmit() {
-    fetch("/api/v1/questionnaire", {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json', 
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: 'ma',
-      })
-    });
+    const { dispatch, questionnaire } = this.props;
+    console.log('questionnaire : ', questionnaire);
+    dispatch(actions.submitQuestionnaire({ 
+      name: 'pi',
+    }));
   }
 
   render() {
     return (
       <div className="ng-questionnaire">
         <Profile {...this.props}/>
-        <button onClick={::this.handleSubmit}>
+        <Button
+          className="primary"
+          type="primary"
+          onClick={::this.handleSubmit}>
           提交
-        </button>
+        </Button>
       </div>
     )
   }

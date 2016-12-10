@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import * as actions from 'actions/quesionnaire';
+import * as actions from 'actions/questionnaire';
 
 const initialState = {
   editValues: {},
@@ -7,9 +7,10 @@ const initialState = {
 
 const updateQuestionnaireInput = (state, { payload }) => {
   const { editValues } = state;
+  const values = { ...editValues, ...payload};
   return {
     ...state, 
-    {...editValues, ...payload},
+    editValues: values, 
   };
 }
 

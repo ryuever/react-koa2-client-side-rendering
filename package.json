@@ -8,7 +8,7 @@
     "build:dev": "webpack --config ./webpack/webpack.config.client.dev.babel.js --color --progress",
     "build:prod": "webpack --config ./webpack/webpack.config.client.prod.babel.js --color --display-modules --display-error-details",
     "start": "npm run start:dev",
-    "server": "NODE_ENV=development nodemon index.js",
+    "server": "NODE_ENV=development node index.js",
     "start:dev": "NODE_ENV=development npm run build:dev && NODE_ENV=development node index.js ",
     "start:prod": "npm run build:prod && pm2 index.js",
     "webpack-server": "NODE_ENV=development webpack-dev-server --inline --compress --port 3000 --config ./webpack/webpack.config.dev.server.babel.js --progress --display-error-details"
@@ -28,6 +28,7 @@
     "config": "^1.24.0",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^1.0.1",
+    "image-webpack-loader": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
     "koa": "^2.0.0-alpha.7",
     "koa-bodyparser": "^3.2.0",
@@ -52,6 +53,7 @@
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   },

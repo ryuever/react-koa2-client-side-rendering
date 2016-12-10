@@ -4,6 +4,8 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
+const filename = 'assets/[name].[ext]';
+
 export default {
   devtool: 'cheap-module-eval-source-map',
   entry: [
@@ -28,6 +30,7 @@ export default {
       'sUtils': path.join(__dirname, '..', 'server', 'utils'),
       'actions': path.join(__dirname, '..', 'app', 'actions'),
       'reducers': path.join(__dirname, '..', 'app', 'reducers'),
+      'wall-e': path.join(__dirname, '..', 'wall-e', 'stylesheets', 'scaffold'),
     }    
   },
 
@@ -42,6 +45,12 @@ export default {
         loaders: ['react-hot', 'babel'],
       },
       { test: /\.css$/, loader: ExtractTextPlugin.extract('style', `css!postcss?modules=true&localIdentname=[name]__[local]__[__hash:base64:5]`) },
+      { test: /\.(jpe?g|png|gif|svg)$/i, loader: `url?limit=2048?name=${filename}!image-webpack` },
+      { test: /\.woff((\?|\#)[\?\#\w\d_-]+)?$/, loader: 'url', query: { limit: 100, minetype: 'application/font-woff', name: filename } },
+      { test: /\.woff2((\?|\#)[\?\#\w\d_-]+)?$/, loader: 'url', query: { limit: 100, minetype: 'application/font-woff2', name: filename } },
+      { test: /\.ttf((\?|\#)[\?\#\w\d_-]+)?$/, loader: 'url', query: { limit: 100, minetype: 'application/octet-stream', name: filename } },
+      { test: /\.eot((\?|\#)[\?\#\w\d_-]+)?$/, loader: 'url', query: { limit: 100, name: filename } },
+      { test: /\.svg((\?|\#)[\?\#\w\d_-]+)?$/, loader: 'url', query: { limit: 10000, minetype: 'image/svg+xml', name: filename }, exclude: /\.svg$/ },      
       {
         test: /\.pug$/,
         loader: 'pug-html-loader',
