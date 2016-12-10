@@ -1,13 +1,24 @@
-export default function tag (state={
-  editValued: {},
-}, action){
-  switch(action.type) {
+import { handleActions } from 'redux-actions';
+import * as actions from 'actions/quesionnaire';
 
-    case 'UPDATE_INPUT': 
-      return {
-        ...state, ...action.data,
-      };
-    default:
-      return state
-  }
+const initialState = {
+  editValues: {},
+};
+
+const updateQuestionnaireInput = (state, { payload }) => {
+  const { editValues } = state;
+  return {
+    ...state, 
+    {...editValues, ...payload},
+  };
 }
+
+const submitQuestionnaireSuccess = (state, { payload }) => ({
+  ...state,
+  ...payload,
+})
+
+export default handleActions({
+  [actions.updateQuestionnaireInput]: updateQuestionnaireInput,
+  [actions.submitQuestionnaireSuccess]: submitQuestionnaireSuccess, 
+}, initialState);

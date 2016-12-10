@@ -22,8 +22,12 @@ export default {
     modulesDirectories: ['node_modules'],
     extensions: ['.js', '.css', '.pug', ''],
     alias: {
-     'react-eva': path.join(__dirname, '..', 'components'),
-      'lib': path.join(__dirname, '..', 'lib'),     
+      'react-eva': path.join(__dirname, '..', 'components'),
+      'lib': path.join(__dirname, '..', 'lib'),
+      'cUtils': path.join(__dirname, '..', 'app', 'utils'),
+      'sUtils': path.join(__dirname, '..', 'server', 'utils'),
+      'actions': path.join(__dirname, '..', 'app', 'actions'),
+      'reducers': path.join(__dirname, '..', 'app', 'reducers'),
     }    
   },
 

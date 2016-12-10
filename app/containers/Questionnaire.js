@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Card from '../components/card';
 import Profile from '../components/profile';
-// import { request as api } from 'lib/request';
 import fetch from 'isomorphic-fetch';
 import { connect } from 'react-redux';
 
@@ -11,7 +10,7 @@ class Questionnaire extends Component {
   }
 
   handleSubmit() {
-    fetch("/v1/questionnaire", {
+    fetch("/api/v1/questionnaire", {
       method: 'POST',
       headers: {
         Accept: 'application/json', 
