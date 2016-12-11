@@ -1,3 +1,5 @@
 import Questionnaire from './questionnaire';
-console.log(' Questionnaire in controller', Questionnaire);
 export { Questionnaire };
+
+import Type from './type';
+export { Type };

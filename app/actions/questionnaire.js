@@ -9,8 +9,12 @@ export const submitQuestionnaireFailure = createAction('SUBMIT_QUESTIONNAIRE_FAI
 export function submitQuestionnaire(data) {
   return (dispatch) => {
     dispatch(submitQuestionnaireRequest());
-    Request.post('/api/v1/questionnaire', data)
-      .then((res) => dispatch(submitQuestionnaireSuccess(res)))
-      .catch((err) => console.log('error : ', err))
+    Request.post('/api/v1/questionnaire', data).then((res) => {
+      dispatch(submitQuestionnaireSuccess(res));
+      alert('提交成功');
+    }).catch((err) => {
+      dispatch(submitQuestionnaireFailure());
+      alert('提交失败');      
+    })
   }
 }

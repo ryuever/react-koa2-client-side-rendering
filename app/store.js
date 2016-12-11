@@ -1,10 +1,12 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
-import questionnaireReducer from './reducers/questionnaire';
+import questionnaireReducer from 'reducers/questionnaire';
+import typeReducer from 'reducers/type';
 
 const reducers = combineReducers({
   questionnaire: questionnaireReducer,
+  type: typeReducer,
 });
 
 const loggerMiddleware = createLogger({

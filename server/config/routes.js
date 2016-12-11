@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { Questionnaire } from '../controllers'; 
+import { Questionnaire, Type } from '../controllers'; 
 import fs from 'fs';
 import path from 'path';
 
@@ -14,7 +14,8 @@ const apiRouter = new Router({
   prefix: '/api/v1',
 })
 
-apiRouter.post('/questionnaire', Questionnaire.postQuestionnaire);
+apiRouter.post('/questionnaire', Questionnaire.createQuestionnaire);
+apiRouter.post('/type', Type.createType);
 
 // export default router;
 const router = { getRouter, apiRouter };

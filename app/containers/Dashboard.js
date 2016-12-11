@@ -8,12 +8,12 @@ export default class Dashboard extends Component {
 
   render() {
     return (
-      <div className="gq-dashboard">
-        <section className="side-bar">
+      <div className="gq-dashboard row">
+        <section className="side-bar col-2">
           <Sidebar />
         </section>
 
-        <section className="main">
+        <section className="main col-10">
           {this.props.children}
         </section>
       </div>    

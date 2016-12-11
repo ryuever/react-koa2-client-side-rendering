@@ -8,13 +8,22 @@ body {
 
 #app {
   background: #fff;
+  height: 100%;
 }
 
 .ng-app {
   max-width: 1000px !important;
   margin: auto;
-  background: #84c1df;
+  background: #82e5b8;
 
   border: 1px solid #eee;
   box-shadow: 0 0 5px rgba(9, 2, 4, .35);
+}
+
+.gq-dashboard {
+  width: 100%;
+}
+
+.main.col-10 {
+  min-height: 800px;
 }

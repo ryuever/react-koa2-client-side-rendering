@@ -16,9 +16,6 @@ export default class App extends Component {
         <div className="ng-main">
           {children}
         </div>
-        <Link to="dashboard">
-          控制台
-        </Link>
         <Footer />
       </div>
     );

@@ -13,7 +13,6 @@ class Questionnaire extends Component {
 
   handleSubmit() {
     const { dispatch, questionnaire } = this.props;
-    console.log('questionnaire : ', questionnaire);
     dispatch(actions.submitQuestionnaire({ 
       name: 'pi',
     }));
