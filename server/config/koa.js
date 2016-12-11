@@ -10,7 +10,7 @@ import webpack from 'webpack';
 import devMiddleware from 'koa-webpack-dev-middleware';
 import hotMiddleware from 'koa-webpack-hot-middleware';
 import webpackConfig from '../../webpack/webpack.config.client.dev.babel';
-import router from './routes';
+import Router from './routes';
 
 const app = new Koa();
 app.use(bodyParser());
@@ -60,7 +60,9 @@ app.use(async (ctx, next) => {
 
 app
   .use(bodyParser())
-  .use(router.routes())
-  .use(router.allowedMethods());
+  .use(Router.getRouter.routes())
+  .use(Router.getRouter.allowedMethods())
+  .use(Router.apiRouter.routes())
+  .use(Router.apiRouter.allowedMethods());  
 
 export default app;

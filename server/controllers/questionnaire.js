@@ -6,6 +6,7 @@ const postQuestionnaire = async(ctx, next) => {
   let $user = User.findOne(ctx.request.body).exec();
   const { name } = ctx.request.body;
 
+  console.log('create questionnaire');
   await $user
     .then(function(existingUser){
       if(existingUser){

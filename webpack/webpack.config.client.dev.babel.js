@@ -28,8 +28,12 @@ export default {
       'lib': path.join(__dirname, '..', 'lib'),
       'cUtils': path.join(__dirname, '..', 'app', 'utils'),
       'sUtils': path.join(__dirname, '..', 'server', 'utils'),
+
+      'containers': path.join(__dirname, '..', 'app', 'containers'),
+      'components': path.join(__dirname, '..', 'app', 'components'),
       'actions': path.join(__dirname, '..', 'app', 'actions'),
       'reducers': path.join(__dirname, '..', 'app', 'reducers'),
+
       'wall-e': path.join(__dirname, '..', 'wall-e', 'stylesheets', 'scaffold'),
     }    
   },
