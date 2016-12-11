@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
 import config from 'config';
 import schemas from '../schemas';
+import Promise from 'bluebird';
 
 mongoose.connect('mongodb://localhost:27017/koa-test');
+
+mongoose.Promise = Promise;
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
