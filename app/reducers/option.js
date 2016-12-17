@@ -6,11 +6,17 @@ const initialState = {
 };
 
 const updateOptionInput = (state, { payload }) => {
-  const { id, name, value } = payload;
+  const { pid, name, id, value } = payload;
   const { editedOptions } = state;
 
-  const obj = { ...editedOptions[id], [name]: value };
-  const options = { ...editedOptions, [id]: obj };
+  const obj = { 
+    ...editedOptions[pid], [name]: {
+      _id: id,
+      language: name,
+      description: value,
+    },
+  };
+  const options = { ...editedOptions, [pid]: obj };
 
   return {
     ...state,
@@ -19,9 +25,9 @@ const updateOptionInput = (state, { payload }) => {
 };
 
 const addNewOptions = (state, { payload }) => {
-  const { id } = payload;
+  const { pid } = payload;
   const { editedOptions } = state;
-  const options = { ...editedOptions, [id]: { ...payload } };
+  const options = { ...editedOptions, [pid]: { ...payload } };
 
   return {
     ...state,

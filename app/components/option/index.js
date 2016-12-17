@@ -17,10 +17,10 @@ export default class Option extends Component {
     dispatch(actions.queryOptions(typeId));
   }
 
-  handleInputChange({ target: { id, name, value } }) {
+  handleInputChange(pid, { target: { id, name, value } }) {
     const { dispatch } = this.props;
     dispatch(actions.updateOptionInput({
-      id, value, name,
+      pid, id, name, value,
     }));
   }
 
@@ -30,11 +30,11 @@ export default class Option extends Component {
     const languages = ['en', 'ja', 'ch'];
     const init = {};
     languages.forEach(lang => {
-      init[lang] = '';
+      init[lang] = {};
     });
     
     dispatch(actions.addNewOptions({
-      id: Date.now(),
+      pid: Date.now(),
       action: 'add',
       ...init,
     }));
@@ -60,8 +60,6 @@ export default class Option extends Component {
         description: ja,
       }];
     });
-
-    console.log('typeId : ', typeId);
 
     dispatch(actions.submitOptions({ 
       data, typeId,
@@ -109,51 +107,63 @@ export default class Option extends Component {
   renderContent() {
     const { 
       option: {
-        editedOptions, defaultOptions,
+        editedOptions, defaultOptions, queryOptionsStatus,
       }
     } = this.props;
 
     const languages = ['en', 'ja', 'ch'];
 
-    if (isEmpty(editedOptions)) {
+    if (queryOptionsStatus === 'pending') {
       return null;
     }
+
+    const options = [];
 
     if (defaultOptions && defaultOptions.length > 0) {
       defaultOptions.forEach(option => {
         const { _id, content } = option;
+        const obj = {};
+        content.forEach(item => obj[item.language] = {...item});
+
         options.push({
           id: _id,
-          ...content,
+          ...obj,
         })
       })
     }
 
-    const options = [];
     Object.keys(editedOptions).forEach(key => {
       options.push(editedOptions[key]);
     })
 
     return (
-      options.map((item, key) =>
-        <div className="row" key={key}>
-          {
-            languages.map((language, key) =>
-              <div className="col-4" key={key}>
-                <Input
-                  id={item.id}
-                  name={language}
-                  onChange={::this.handleInputChange} />
-              </div>              
-            )
-          }
-        </div>
-      )
+      options.map((item, key) => {
+        return (
+          <div className="row" key={key}>
+            {
+              languages.map((language, key) => {
+                if (item[language]) {
+                  const { _id, description } = item[language];
+                  return (
+                    <div className="col-4" key={key}>
+                      <Input
+                        id={_id || Date.now()}
+                        name={language}
+                        value={description || ''}
+                        onChange={this.handleInputChange.bind(this, item.pid || Date.now())} />
+                    </div>                    
+                  );
+                }
+                return null;
+              })
+            }
+          </div>
+        )
+      })
     );
   }
 
   render() {
-   
     return (
       <Card 
         title="请输入默认值" 
@@ -165,35 +175,3 @@ export default class Option extends Component {
     )
   }
 }  
-
-
-// 只能够添加和删除，不能够更改
-// {
-//   type: xxx,
-//   content: {
-
-//   }
-// }
-
-// action: 'add',
-// pid: {
-//   content: {
-//     id: {
-//       language: 'en',
-//       description: 'xxxx',
-//     }
-//   }
-// }
-
-// =>
-
-// {
-//   type: pid,
-//   content: [{
-//     language: 'en',
-//     description: 'xxx',
-//   }, {
-//     language: 'ja',
-//     description: 'xxxx',
-//   }],
-// }
