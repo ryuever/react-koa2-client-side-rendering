@@ -12,25 +12,43 @@ const createOptions = async(ctx, next) => {
     content: d,
   }));
 
-  await Option.insertMany(options).then(options => {
-    return ctx.body = options;
-  }).catch((err) => {
+  try {
+    ctx.body = await Option.insertMany(options); 
+  } catch (err) {
     throw new Err('BAD-REQUEST', 'create options');
-  });
+  }
 };
 
 const getOptions = async(ctx, next) => {
   const typeId = ctx.params.typeId;
-  const options = Option.find({ type: typeId }).exec();
-
-  await options.then(options => {
-    return ctx.body = options;
-  }).catch(err => {
+  try {
+    ctx.body = await Option.find({ type: typeId }).exec();
+  } catch (err) {
     throw new Err('BAD-REQUEST', 'get options');
-  })
+  }
 };
+
+const deleteOptions = async(ctx, next) => {
+  const typeId = ctx.params.typeId;
+  const data = ctx.request.body;
+
+  try {
+    const tasks = data.map(option => {
+      Option.remove({ _id: mongoose.Types.ObjectId(option)}).exec();
+    })
+
+    let results = [];
+    for (let task of tasks) {
+      results.push(await task);
+    }
+    ctx.status = 204;    
+  } catch (err) {
+    throw new Err('BAD-REQUEST', 'delete options');
+  }
+}
 
 export default {
   createOptions,
   getOptions,
+  deleteOptions,
 };

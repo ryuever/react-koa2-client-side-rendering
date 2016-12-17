@@ -16,6 +16,7 @@ apiRouter.get('/type', Type.getType);
 
 apiRouter.post('/type/:typeId/options', Option.createOptions);
 apiRouter.get('/type/:typeId/options', Option.getOptions);
+apiRouter.del('/type/:typeId/options', Option.deleteOptions);
 
 getRouter.get('*', (ctx, next) => {
   ctx.type = 'html';

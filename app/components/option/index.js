@@ -47,23 +47,42 @@ export default class Option extends Component {
       params: { typeId },
     } = this.props;
 
-    const data = Object.keys(editedOptions).map(key => {
-      const { en, ja, ch } = editedOptions[key];
-      return [{
-        language: 'en',
-        description: en,
-      }, {
-        language: 'ch',
-        description: ch,
-      }, {
-        language: 'ja',
-        description: ja,
-      }];
+    const optionsToDelete = [];
+    const optionsToCreate = [];
+
+    Object.keys(editedOptions).forEach(key => {
+      const { en, ja, ch, action } = editedOptions[key];
+
+      if (action === 'delete') {
+        optionsToDelete.push(key);
+      } else {
+        optionsToCreate.push([{
+          language: 'en',
+          description: en.description,
+        }, {
+          language: 'ch',
+          description: ch.description,
+        }, {
+          language: 'ja',
+          description: ja.description,
+        }]);
+      }
     });
 
-    dispatch(actions.submitOptions({ 
-      data, typeId,
-    }));
+    console.log('option to create : ', optionsToCreate);
+    if (optionsToCreate.length > 0) {
+      dispatch(actions.submitOptions({ 
+        data: optionsToCreate, 
+        typeId,
+      }));
+    }
+
+    if (optionsToDelete.length > 0) {
+      dispatch(actions.deleteOptions({
+        data: optionsToDelete,
+        typeId,       
+      }))
+    }
   }
 
   renderExtra() {
@@ -104,6 +123,40 @@ export default class Option extends Component {
     );
   }
 
+  handleRemove(id) {
+    const { dispatch } = this.props;
+    dispatch(actions.removeOption(id));
+  }
+
+  renderContentList(languages, item) {
+    const l = [];
+
+    languages.forEach((language, key) => {
+      if (item[language]) {
+        const { _id, description } = item[language];
+        l.push(
+          <div className="col-3" key={key}>
+            <Input
+              id={_id || Date.now()}
+              name={language}
+              value={description || ''}
+              onChange={this.handleInputChange.bind(this, item.pid || Date.now())} />
+          </div>                    
+        );
+      }
+    });
+
+    l.push(
+      <div className="col-3" key="remove">
+        <Button 
+          onClick={this.handleRemove.bind(this, item.id)}>
+          删除
+        </Button>
+      </div>  
+    );
+    return l;
+  }
+
   renderContent() {
     const { 
       option: {
@@ -124,39 +177,29 @@ export default class Option extends Component {
         const { _id, content } = option;
         const obj = {};
         content.forEach(item => obj[item.language] = {...item});
-
-        options.push({
-          id: _id,
-          ...obj,
-        })
+        if (!editedOptions[_id.toString()]) {
+          options.push({
+            id: _id,
+            ...obj,
+          })
+        }
       })
     }
 
     Object.keys(editedOptions).forEach(key => {
-      options.push(editedOptions[key]);
+      if (editedOptions[key].action !== 'delete') {
+        options.push(editedOptions[key]);
+      }
     })
 
     return (
       options.map((item, key) => {
         return (
-          <div className="row" key={key}>
-            {
-              languages.map((language, key) => {
-                if (item[language]) {
-                  const { _id, description } = item[language];
-                  return (
-                    <div className="col-4" key={key}>
-                      <Input
-                        id={_id || Date.now()}
-                        name={language}
-                        value={description || ''}
-                        onChange={this.handleInputChange.bind(this, item.pid || Date.now())} />
-                    </div>                    
-                  );
-                }
-                return null;
-              })
-            }
+          <div 
+            id={item.id}
+            className="row" 
+            key={key}>
+            {this.renderContentList(languages, item)}
           </div>
         )
       })

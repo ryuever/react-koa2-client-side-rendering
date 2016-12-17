@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormField, Radio, Input, Form, Tabs } from 'react-eva';
 import * as actions from 'actions/type';
-console.log('tabs : ', Tabs);
+
 export default class AddForm extends Component {
   constructor(props) {
     super(props);

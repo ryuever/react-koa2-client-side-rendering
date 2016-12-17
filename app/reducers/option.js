@@ -35,6 +35,22 @@ const addNewOptions = (state, { payload }) => {
   };
 };
 
+const removeOption = (state, { payload }) => {
+  const id = payload;
+  const { editedOptions } = state;
+  const options = {...editedOptions};
+  if (options[id]) {
+    delete options[id];
+  } else {
+    options[id] = { action: 'delete' };
+  }
+
+  return {
+    ...state,
+    editedOptions: options,
+  };
+}
+
 const queryOptionsRequest = (state) => ({
   ...state,
   queryOptionsStatus: 'pending',
@@ -51,11 +67,19 @@ const queryOptionsFailure = (state, { payload }) => ({
   queryOptionsStatus: 'error',
 });
 
+const deleteOptionsSuccess = (state) => ({
+  ...state,
+  deleteOptionStatus: 'success',
+});
+
 export default handleActions({
   [actions.updateOptionInput]: updateOptionInput,
   [actions.addNewOptions]: addNewOptions, 
+  [actions.removeOption]: removeOption,
 
   [actions.queryOptionsRequest]: queryOptionsRequest,
   [actions.queryOptionsSuccess]: queryOptionsSuccess,
   [actions.queryOptionsFailure]: queryOptionsFailure,  
+
+  [actions.deleteOptionsSuccess]: deleteOptionsSuccess,  
 }, initialState);

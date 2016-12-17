@@ -3,6 +3,7 @@ import { Request } from 'cUtils';
 
 export const updateOptionInput = createAction('UPDATE_OPTION_INPUT');
 export const addNewOptions = createAction('ADD_NEW_OPTIONS');
+export const removeOption = createAction('REMOVE_OPTION');
 
 export const submitOptionsRequest = createAction('SUBMIT_OPTIONS_REQUEST');
 export const submitOptionsSuccess = createAction('SUBMIT_OPTIONS_SUCCESS');
@@ -30,6 +31,20 @@ export function queryOptions(typeId) {
       dispatch(queryOptionsSuccess(res));
     }).catch(err => {
       dispatch(queryOptionsFailure());
+    })
+  }
+}
+
+export const deleteOptionsRequest = createAction('DELETE_OPTIONS_REQUEST');
+export const deleteOptionsFailure = createAction('DELETE_OPTIONS_FAILURE');
+export const deleteOptionsSuccess = createAction('DELETE_OPTIONS_SUCCESS');
+export function deleteOptions({ typeId, data }) {
+  return (dispatch) => {
+    dispatch(deleteOptionsRequest());
+    Request.del(`/api/v1/type/${typeId}/options`, data).then(res => {
+      dispatch(deleteOptionsSuccess(res));
+    }).catch(err => {
+      dispatch(deleteOptionsFailure());
     })
   }
 }

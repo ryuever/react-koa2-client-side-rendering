@@ -22,9 +22,14 @@ class Request {
     });
   }
 
-  static delete(url) {
+  static del(url, data) {
     return fetch(url, {
       method: 'Delete',
+      headers: {
+        Accept: 'application/json', 
+        'Content-Type': 'application/json',
+      },      
+      body: JSON.stringify(data),
     });
   }
 }
