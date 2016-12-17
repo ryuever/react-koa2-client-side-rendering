@@ -13,16 +13,22 @@ const updateTypeInput = (state, { payload }) => {
     ...state, 
     editValues: values, 
   };
-}
+};
+
+const submitTypeRequest = (state) => ({
+  ...state,
+  submitTypeStatus: 'pending',
+});
 
 const submitTypeSuccess = (state) => ({
   ...state,
+  submitTypeStatus: 'success',
   createModalVisible: false,
 });
 
 const submitTypeFailure = (state) => ({
   ...state,
-  createModalVisible: false,
+  submitTypeStatus: 'error',  
 });
 
 const openCreateModal = (state) => ({
@@ -32,14 +38,36 @@ const openCreateModal = (state) => ({
 
 const closeCreateModal = (state) => ({
   ...state,
-  createModalVisible: true,
+  createModalVisible: false,
+});
+
+const queryTypesRequest = (state) => ({
+  ...state,
+  queryTypesStatus: 'pending',
+});
+
+const queryTypesSuccess = (state, { payload }) => ({
+  ...state,
+  types: payload,
+  queryTypesStatus: 'success',
+});
+
+const queryTypesFailure = (state, { payload }) => ({
+  ...state,
+  types: payload,
+  queryTypesStatus: 'error',
 });
 
 export default handleActions({
   [actions.updateTypeInput]: updateTypeInput,
 
+  [actions.submitTypeRequest]: submitTypeRequest, 
   [actions.submitTypeSuccess]: submitTypeSuccess, 
   [actions.submitTypeFailure]: submitTypeFailure,
+
+  [actions.queryTypesRequest]: queryTypesRequest,
+  [actions.queryTypesSuccess]: queryTypesSuccess,
+  [actions.queryTypesFailure]: queryTypesFailure,  
 
   [actions.openCreateModal]: openCreateModal,
   [actions.closeCreateModal]: closeCreateModal,

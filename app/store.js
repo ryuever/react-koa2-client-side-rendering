@@ -3,10 +3,12 @@ import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import questionnaireReducer from 'reducers/questionnaire';
 import typeReducer from 'reducers/type';
+import optionReducer from 'reducers/option';
 
 const reducers = combineReducers({
   questionnaire: questionnaireReducer,
   type: typeReducer,
+  option: optionReducer,
 });
 
 const loggerMiddleware = createLogger({

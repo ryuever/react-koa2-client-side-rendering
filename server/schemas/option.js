@@ -1,4 +1,5 @@
 import { Schema } from 'mongoose';
+import OptionValueSchema from './option-value';
 
 const OptionSchema = new Schema({
   type: {
@@ -6,6 +7,7 @@ const OptionSchema = new Schema({
     ref: 'Type', 
     required: true,
   },
+  content: [OptionValueSchema],
 })
 
 export default OptionSchema;

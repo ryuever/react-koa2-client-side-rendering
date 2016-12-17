@@ -249,7 +249,6 @@ export default class Tbody extends Component {
 
     decoratedRows.forEach((record, key) => {
       const rowNum = startPosition + key;
-      console.log('body ', syncClickedItem);
       children.push(
         <TableRow
           className={className}

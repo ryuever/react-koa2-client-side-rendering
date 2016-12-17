@@ -5,7 +5,7 @@ import Type from 'components/type';
 const TypeContainer = (props) => {
   return (
     <Type {...props} />
-  )
+  );
 }
 
 const mapStateToProps = ({ type }) => ({

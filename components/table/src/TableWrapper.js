@@ -860,7 +860,6 @@ export default class TableWrapper extends Component {
       clickedItem: item,
     });
 
-    console.log('record ', record, item);
     if (handleClick) {
       handleClick(record);
     }

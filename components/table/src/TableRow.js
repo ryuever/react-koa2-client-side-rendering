@@ -17,11 +17,10 @@ export default class TableRow extends Component {
 
   handleClick(record, rowNum) {
     const { syncClickedItem } = this.props;
-    console.log('sync ', syncClickedItem);
+    ('sync ', syncClickedItem);
     if (syncClickedItem) {
       syncClickedItem(record, rowNum);
     }
-    console.log('click --------');
   }
 
   render() {

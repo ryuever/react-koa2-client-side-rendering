@@ -138,7 +138,6 @@ export default class Table extends Component {
       syncClickedItem,
     } = this.props;
 
-    console.log('table ', syncClickedItem);
     return (
       <Tbody
         key="tbody"

@@ -1,4 +1,5 @@
 import { Schema } from 'mongoose';
+import QuestionOptionValueSchema from './question-option-value';
 
 const QuestionOptionSchema = new Schema({
   type: { 
@@ -16,6 +17,7 @@ const QuestionOptionSchema = new Schema({
     ref: 'Option', 
     required: true,
   },
+  content: QuestionOptionValueSchema,
 });
 
 export default QuestionOptionSchema;

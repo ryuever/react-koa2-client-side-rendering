@@ -17,11 +17,11 @@ const {
   UserSchema,
   TypeSchema, 
   OptionSchema,
-  OptionValueSchema,
+  // OptionValueSchema,
   QuestionSchema,
-  QuestionValueSchema,
+  // QuestionValueSchema,
   QuestionOptionSchema,
-  QuestionOptionValueSchema,
+  // QuestionOptionValueSchema,
 } = schemas;
 
 export default {
@@ -29,11 +29,11 @@ export default {
   Type: db.model('Type', TypeSchema),
   
   Option: db.model('Option', OptionSchema),
-  OptionValue: db.model('OptionValue', OptionValueSchema),
+  // OptionValue: db.model('OptionValue', OptionValueSchema),
 
   Question: db.model('Question', QuestionSchema),
-  QuestionValue: db.model('QuestionValue', QuestionValueSchema),
+  // QuestionValue: db.model('QuestionValue', QuestionValueSchema),
 
   QuestionOption: db.model('QuestionOption', QuestionOptionSchema),
-  QuestionOptionValue: db.model('QuestionOptionValue', QuestionOptionValueSchema),
+  // QuestionOptionValue: db.model('QuestionOptionValue', QuestionOptionValueSchema),
 };

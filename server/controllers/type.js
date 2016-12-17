@@ -10,7 +10,7 @@ const createType = async(ctx, next) => {
   const existingType = await $type;
 
   if (existingType) {
-    throw new Err('CONFLICT', 'Dulplicate type');    
+    throw new Err('CONFLICT', 'Dulplicate type'); 
   }
 
   const type = new Type({
@@ -24,6 +24,19 @@ const createType = async(ctx, next) => {
   });
 };
 
+const getType = async(ctx, next) => {
+  let $types = Type.find().exec();
+
+  const types = await $types;
+
+  await $types.then(types => {
+    return ctx.body = types;
+  }).catch((err) => {
+    throw new Err('BAD-REQUEST', 'bad !!!!');
+  });
+}
+
 export default {
   createType,
+  getType,
 };

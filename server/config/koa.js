@@ -60,9 +60,9 @@ app.use(async (ctx, next) => {
 
 app
   .use(bodyParser())
+  .use(Router.apiRouter.routes())
+  .use(Router.apiRouter.allowedMethods())  
   .use(Router.getRouter.routes())
   .use(Router.getRouter.allowedMethods())
-  .use(Router.apiRouter.routes())
-  .use(Router.apiRouter.allowedMethods());  
 
 export default app;

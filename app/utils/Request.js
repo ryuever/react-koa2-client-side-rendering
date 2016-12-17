@@ -1,8 +1,14 @@
 import fetch from 'isomorphic-fetch';
 
 class Request {
-  static get() {
-
+  static get(url) {
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json', 
+        'Content-Type': 'application/json',
+      },
+    }).then(res => res.json());
   }
 
   static post(url, data) {
@@ -16,8 +22,10 @@ class Request {
     });
   }
 
-  static delete() {
-
+  static delete(url) {
+    return fetch(url, {
+      method: 'Delete',
+    });
   }
 }
 
