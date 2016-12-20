@@ -4,6 +4,7 @@ import { Request } from 'cUtils';
 export const updateOptionInput = createAction('UPDATE_OPTION_INPUT');
 export const addNewOptions = createAction('ADD_NEW_OPTIONS');
 export const removeOption = createAction('REMOVE_OPTION');
+export const cleanupOptions = createAction('CLEAN_UP_OPTIONS');
 
 export const submitOptionsRequest = createAction('SUBMIT_OPTIONS_REQUEST');
 export const submitOptionsSuccess = createAction('SUBMIT_OPTIONS_SUCCESS');

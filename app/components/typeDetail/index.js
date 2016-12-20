@@ -21,9 +21,7 @@ export default class TypeDetail extends Component {
       dispatch(actions.queryTypes());
     }
 
-    if (!defaultOptions) {
-      dispatch(optionActions.queryOptions(typeId));
-    }
+    dispatch(optionActions.queryOptions(typeId));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -72,21 +70,24 @@ export default class TypeDetail extends Component {
   renderOptions() {
     const { 
       option: { defaultOptions },
-      type: { currentType: { supportedLanguages } },
+      type: { currentType, currentTypeId },
     } = this.props;
     
-    if (!defaultOptions || defaultOptions.length === 0) {
+    if (!currentType || currentTypeId !== currentType['_id']) {
       return null;
     }
 
-    const columnData = supportedLanguages.map((language) => ({
+    const lang = currentType.supportedLanguages || [];
+    const options = defaultOptions || [];
+
+    const columnData = lang.map((language) => ({
       key: language.trim(),
       title: language,
     }));
 
     let rawData = [];
 
-    defaultOptions.forEach((option) => {
+    options.forEach((option) => {
       const content = option.content;
       rawData.push(content.reduce((prev, next) => ({
         ...prev,
@@ -96,9 +97,13 @@ export default class TypeDetail extends Component {
 
     return (
       <Card 
+        bordered={false}
         title="默认值选项"
         extra={this.redirectToEdit()}>
-        <Table rawData={rawData} columnData={columnData} />
+        { columnData.length > 0 
+          ? <Table rawData={rawData} columnData={columnData} />
+          : null
+        }
       </Card>
     );
   }

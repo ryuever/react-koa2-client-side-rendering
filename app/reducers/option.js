@@ -5,6 +5,11 @@ const initialState = {
   editedOptions: {},
 };
 
+const cleanupOptions = (state) => ({
+  ...state,
+  editedOptions: {},
+});
+
 const updateOptionInput = (state, { payload }) => {
   const { pid, name, id, value } = payload;
   const { editedOptions } = state;
@@ -76,6 +81,7 @@ export default handleActions({
   [actions.updateOptionInput]: updateOptionInput,
   [actions.addNewOptions]: addNewOptions, 
   [actions.removeOption]: removeOption,
+  [actions.cleanupOptions]: cleanupOptions,
 
   [actions.queryOptionsRequest]: queryOptionsRequest,
   [actions.queryOptionsSuccess]: queryOptionsSuccess,

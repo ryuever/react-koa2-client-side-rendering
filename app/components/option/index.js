@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Card, Button, Input } from 'react-eva';
 import * as actions from 'actions/option';
+import * as typeActions from 'actions/type';
 import { isEmpty } from 'lib/lang';
 
 export default class Option extends Component {
@@ -10,12 +11,24 @@ export default class Option extends Component {
 
   componentWillMount() {
     const { 
-      params: { typeId },
+      params: { typeId }, 
+      type: { types },
       dispatch,
     } = this.props;
 
+    dispatch(typeActions.setCurrentTypeId(typeId));    
+
+    if (!types) {
+      dispatch(typeActions.queryTypes());
+    }
+
     dispatch(actions.queryOptions(typeId));
   }
+
+  componentWillUnmount() {
+    this.props.dispatch(actions.cleanupOptions());
+  }
+
 
   handleInputChange(pid, { target: { id, name, value } }) {
     const { dispatch } = this.props;
@@ -25,9 +38,12 @@ export default class Option extends Component {
   }
 
   handleAddOption() {
-    const { dispatch } = this.props;
+    const { 
+      dispatch,
+      type: { currentType: { supportedLanguages } },
+    } = this.props;
 
-    const languages = ['en', 'ja', 'ch'];
+    const languages = supportedLanguages;
     const init = {};
     languages.forEach(lang => {
       init[lang] = {};
@@ -45,27 +61,22 @@ export default class Option extends Component {
       dispatch, 
       option: { editedOptions },
       params: { typeId },
+      type: { currentType: { supportedLanguages } },
     } = this.props;
 
     const optionsToDelete = [];
     const optionsToCreate = [];
 
     Object.keys(editedOptions).forEach(key => {
-      const { en, ja, ch, action } = editedOptions[key];
+      const { action } = editedOptions[key];
 
       if (action === 'delete') {
         optionsToDelete.push(key);
       } else {
-        optionsToCreate.push([{
-          language: 'en',
-          description: en.description,
-        }, {
-          language: 'ch',
-          description: ch.description,
-        }, {
-          language: 'ja',
-          description: ja.description,
-        }]);
+        optionsToCreate.push(supportedLanguages.map((lang) => ({
+          language: lang,
+          description: editedOptions[key][lang].description
+        })));
       }
     });
 
@@ -105,7 +116,12 @@ export default class Option extends Component {
   }
 
   renderHeader() {
-    const languages = ['en', 'ja', 'ch'];
+
+    const {
+      type: { currentType: { supportedLanguages } } 
+    } = this.props;
+
+    const languages = supportedLanguages;
 
     return (
       <div className="row" key="header">
@@ -160,10 +176,11 @@ export default class Option extends Component {
     const { 
       option: {
         editedOptions, defaultOptions, queryOptionsStatus,
-      }
+      },
+      type: { currentType: { supportedLanguages } },
     } = this.props;
 
-    const languages = ['en', 'ja', 'ch'];
+    const languages = supportedLanguages;
 
     if (queryOptionsStatus === 'pending') {
       return null;
@@ -208,13 +225,14 @@ export default class Option extends Component {
   render() {
     const { 
       option: { defaultOptions },
+      type: { currentType, currentTypeId },
     } = this.props;
 
-    if (!defaultOptions || defaultOptions.length === 0) {
+    if (!currentType || currentTypeId !== currentType['_id']) {
       return null;
     }
 
-    const title = defaultOptions[0].type.name;
+    const title = currentType.name;
 
     return (
       <Card 
