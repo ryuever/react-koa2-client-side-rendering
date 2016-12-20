@@ -10,7 +10,7 @@ export default class Sidebar extends Component {
     return (
       <div className="quick-links">
         <div className="col-12">
-          <Link to="types">
+          <Link to="/dashboard" className="link">
           类型
           </Link>
         </div>

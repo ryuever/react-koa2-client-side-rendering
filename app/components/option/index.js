@@ -10,7 +10,7 @@ export default class Option extends Component {
 
   componentWillMount() {
     const { 
-      params: { typeId},
+      params: { typeId },
       dispatch,
     } = this.props;
 
@@ -69,7 +69,6 @@ export default class Option extends Component {
       }
     });
 
-    console.log('option to create : ', optionsToCreate);
     if (optionsToCreate.length > 0) {
       dispatch(actions.submitOptions({ 
         data: optionsToCreate, 
@@ -207,9 +206,19 @@ export default class Option extends Component {
   }
 
   render() {
+    const { 
+      option: { defaultOptions },
+    } = this.props;
+
+    if (!defaultOptions || defaultOptions.length === 0) {
+      return null;
+    }
+
+    const title = defaultOptions[0].type.name;
+
     return (
       <Card 
-        title="请输入默认值" 
+        title={title}
         extra={this.renderExtra()}
         foot={this.renderFooter()}>
         {this.renderHeader()}

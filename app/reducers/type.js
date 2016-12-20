@@ -15,6 +15,27 @@ const updateTypeInput = (state, { payload }) => {
   };
 };
 
+const setCurrentTypeId = (state, { payload }) => {
+  const currentTypeId = payload;
+  const { types, currentType } = state;
+
+  let ct = {...currentType};
+  if (currentType && !currentType['_id'] && types) {
+    for (let key = 0; key < types.length; key++) {
+      if (currentTypeId === `${types[key]['_id']}`) {
+        ct = types[key];
+        break;
+      }
+    }
+  }
+
+  return {
+    ...state,
+    currentTypeId,
+    currentType: ct,
+  };
+};
+
 const submitTypeRequest = (state) => ({
   ...state,
   submitTypeStatus: 'pending',
@@ -46,11 +67,24 @@ const queryTypesRequest = (state) => ({
   queryTypesStatus: 'pending',
 });
 
-const queryTypesSuccess = (state, { payload }) => ({
-  ...state,
-  types: payload,
-  queryTypesStatus: 'success',
-});
+const queryTypesSuccess = (state, { payload }) => {
+  const { currentTypeId } = state;
+  let currentType = {};
+
+  for (let key = 0; key < payload.length; key++) {
+    if (currentTypeId === `${payload[key]['_id']}`) {
+      currentType = payload[key];
+      break;
+    }
+  }
+
+  return {
+    ...state,
+    types: payload,
+    currentType,
+    queryTypesStatus: 'success',
+  };
+};
 
 const queryTypesFailure = (state, { payload }) => ({
   ...state,
@@ -58,8 +92,25 @@ const queryTypesFailure = (state, { payload }) => ({
   queryTypesStatus: 'error',
 });
 
+const deleteTypeRequest = (state) => ({
+  ...state,
+  deleteTypeStatus: 'pending',
+});
+
+const deleteTypeSuccess = (state) => ({
+  ...state,
+  deleteTypeStatus: 'success',
+});
+
+const deleteTypeFailure = (state, { payload }) => ({
+  ...state,
+  types: payload,
+  deleteTypeStatus: 'error',
+});
+
 export default handleActions({
   [actions.updateTypeInput]: updateTypeInput,
+  [actions.setCurrentTypeId]: setCurrentTypeId,
 
   [actions.submitTypeRequest]: submitTypeRequest, 
   [actions.submitTypeSuccess]: submitTypeSuccess, 
@@ -68,6 +119,10 @@ export default handleActions({
   [actions.queryTypesRequest]: queryTypesRequest,
   [actions.queryTypesSuccess]: queryTypesSuccess,
   [actions.queryTypesFailure]: queryTypesFailure,  
+
+  [actions.deleteTypeRequest]: deleteTypeRequest,
+  [actions.deleteTypeSuccess]: deleteTypeSuccess,
+  [actions.deleteTypeFailure]: deleteTypeFailure,    
 
   [actions.openCreateModal]: openCreateModal,
   [actions.closeCreateModal]: closeCreateModal,

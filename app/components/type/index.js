@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Button, Modal, Table } from 'react-eva';
 import * as actions from 'actions/type';
 import AddForm from './AddForm';
+import { Link } from 'react-router';
 
 export default class Type extends Component {
   constructor(props) {
@@ -72,9 +73,12 @@ export default class Type extends Component {
 
     const rawData = [];
     types.forEach(type => {
-      const { description, name, supportedLanguages } = type;
+      const { description, name, supportedLanguages, _id } = type;
       rawData.push({
-        description, name,
+        name,
+        description: (
+          <Link to={`/dashboard/type/${_id}`}>详细信息</Link>
+        ),         
         language: supportedLanguages.join(', '),
       });
     });
@@ -87,6 +91,7 @@ export default class Type extends Component {
   render() {
     return (
       <Card title="类型列表"
+        bordered={false}
         extra={
           <Button
             onClick={::this.openCreateModal} 

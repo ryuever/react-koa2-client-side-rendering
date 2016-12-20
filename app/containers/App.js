@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import Header from './Header';
-import Footer from './Footer';
 
 import 'wall-e';
 
@@ -16,7 +15,6 @@ export default class App extends Component {
         <div className="ng-main">
           {children}
         </div>
-        <Footer />
       </div>
     );
   }
