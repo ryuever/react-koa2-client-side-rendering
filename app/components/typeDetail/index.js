@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Table } from 'react-eva';
+import { Card, Button, Table, Tabs } from 'react-eva';
 import { Router, Link } from 'react-router';
 import * as actions from 'actions/type';
 import * as optionActions from 'actions/option';
@@ -46,16 +46,31 @@ export default class TypeDetail extends Component {
 
   renderContent(type) {
     const concernedKeys = ['description', 'name', 'supportedLanguages'];
-    return concernedKeys.map(key =>
-      <div className="row" key={key}>
-        <div className="col-3">
-          {key}
-        </div>
-        <div className="col-9">
-          { key === 'supportedLanguages' ? type[key].join(', ') : type[key] }
-        </div>
-      </div>
-    );    
+    // return concernedKeys.map(key =>
+    //   <div className="row" key={key}>
+    //     <div className="col-3">
+    //       {key}
+    //     </div>
+    //     <div className="col-9">
+    //       { key === 'supportedLanguages' ? type[key].join(', ') : type[key] }
+    //     </div>
+    //   </div>
+    // );    
+
+    const columnData = [{
+      key: 'field',
+    }, {
+      key: 'value',
+    }];
+
+    const rawData = concernedKeys.map(key => ({
+      field: key,
+      value: key === 'supportedLanguages' ? type[key].join(', ') : type[key], 
+    }));
+
+    return (
+      <Table rawData={rawData} columnData={columnData} />
+    );
   }
 
   redirectToEdit() {
@@ -63,7 +78,7 @@ export default class TypeDetail extends Component {
       params: { typeId },
     } = this.props;
     return (
-  <Link to={`/dashboard/type/${typeId}/options`}>编辑默认值</Link>
+      <Link to={`/dashboard/type/${typeId}/options`}>编辑默认值</Link>
     );
   }
 
@@ -119,6 +134,24 @@ export default class TypeDetail extends Component {
     )
   }
 
+  renderRedirectToQuestionEdit() {
+    const { 
+      params: { typeId },
+    } = this.props;
+    return (
+      <Link to={`/dashboard/type/${typeId}/questions`}>编辑问题</Link>
+    );
+  }
+
+  renderQuestion() {
+    return (
+      <Card 
+        title="编辑问题"
+        extra={this.renderRedirectToQuestionEdit()}>     
+      </Card>
+    )
+  }
+
   render() {
     const { 
       type: { types },
@@ -147,6 +180,7 @@ export default class TypeDetail extends Component {
         foot={this.renderFoot(data)}>
         {this.renderContent(data)}
         {this.renderOptions()}
+        {this.renderQuestion()}
       </Card>
     );
   }
