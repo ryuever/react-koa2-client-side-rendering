@@ -8,8 +8,8 @@ const QuestionContainer = (props) => {
   );
 }
 
-const mapStateToProps = ({ question, type }) => ({
-  question, type,
+const mapStateToProps = ({ question, type, option }) => ({
+  question, type, option,
 });
 
 export default connect(mapStateToProps)(QuestionContainer);

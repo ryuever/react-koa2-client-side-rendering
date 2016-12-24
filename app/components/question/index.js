@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button } from 'react-eva';
+import { Card, Button, Modal, Form, FormField, Input, Radio } from 'react-eva';
 import * as actions from 'actions/question';
 
 export default class Question extends Component {
@@ -29,11 +29,94 @@ export default class Question extends Component {
     this.props.dispatch(actions.addQuestionGroup(data));
   }
 
-  renderQuestion(content, i) {
+  handleInputChange() {
+
+  }
+
+  handleOptionChange() {
+
+  }
+
+  renderQuestionTemplate() {
+    const { 
+      option: { defaultOptions },
+      question: { currentLang },
+    } = this.props;
+    
+    if (defaultOptions.length === 0) {
+      return null;
+    }
+
+    const options = defaultOptions.map(option => { 
+      const content = option.content;
+      const len = content.length;
+      for (let i = 0; i < len; i++) {
+        if (content[i].language === currentLang) {
+          return {
+            value: content[i]._id,
+            desc: content[i].description,
+          };
+        }
+      }
+    });
+
+    console.log('options : ', options);
+
+    return (
+      <div className="">
+        <Form>
+          <FormField label="Name">
+            <Input
+              id="name" 
+              onChange={::this.handleInputChange} />
+          </FormField>
+
+          <FormField>
+            <Radio.Group
+              onChange={::this.handleOptionChange}>
+              {options.map(option => {
+                return (
+                  <Radio
+                    key={option.value}
+                    value={option.value}>
+                    {option.desc}
+                  </Radio>
+                );
+              })}
+            </Radio.Group>          
+          </FormField>
+        </Form>
+      </div>
+    );
+  }
+
+  renderQuestionBoard() {
+    const { question: { questionBoardVisible } } = this.props;
+
+    return (
+      <Modal
+        style={{ zIndex: 10 }}
+        title="请输入一个问题"
+        hideWithRelease
+        overlayClassName="modal"
+        visible={questionBoardVisible}>
+        {this.renderQuestionTemplate()}
+      </Modal>
+    );
+  }
+
+  openQuestionBoard(lang) {
+    console.log('open board : ', lang);
+    this.props.dispatch(actions.openQuestionModal(lang));
+  }
+
+  renderQuestion(content, lang) {
     const { title, description } = content;
+
     return (
       <Card 
-        key={i}
+        key={lang}
+        onClick={this.openQuestionBoard.bind(this, lang)}
         className="question-item"
         title={title}>
         {description || '点击以编辑'}
@@ -47,7 +130,6 @@ export default class Question extends Component {
       question: { defaultQuestions, editedQuestions },
     } = this.props;
 
-    console.log('supported languages : ', currentType.supportedLanguages);
     const languages = currentType.supportedLanguages;
 
     const mergedQuestions = {
@@ -68,7 +150,7 @@ export default class Question extends Component {
           key={k}
           className="question-card">
           <div className="question-group">
-            {languages.map((lang, i) => this.renderQuestion(q.content[lang], i))}          
+            {languages.map(lang => this.renderQuestion(q.content[lang], lang))}          
           </div>
         </Card>
       );
@@ -93,6 +175,7 @@ export default class Question extends Component {
         className="question-container"
         extra={this.renderAddQuestion()}>
         {this.renderQuestionGroup()}
+        {this.renderQuestionBoard()}
       </Card>
     );
   }

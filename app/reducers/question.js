@@ -14,8 +14,21 @@ const addQuestionGroup = (state, { payload }) => {
     ...state,
     editedQuestions: q,
   };
-}
+};
+
+const openQuestionModal = (state, { payload }) => ({
+  ...state,
+  questionBoardVisible: true,
+  currentLang: payload,
+});
+
+const setCurrentLang = (state, { payload }) => ({
+  ...state,
+  currentLang: payload,
+});
 
 export default handleActions({
-  [actions.addQuestionGroup]: addQuestionGroup,  
+  [actions.addQuestionGroup]: addQuestionGroup,
+  [actions.openQuestionModal]: openQuestionModal,
+  [actions.setCurrentLang]: setCurrentLang,
 }, initialState);
