@@ -7,7 +7,7 @@ const TypeSchema = new Schema({
   description: { type: String },
   supportedLanguages: { 
     type: [ String ], 
-  },
+  }
 });
 
 export default TypeSchema;

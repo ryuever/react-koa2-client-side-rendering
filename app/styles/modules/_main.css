@@ -1,5 +1,14 @@
 .ng-main {
-  display: flex;
-  justify-content: center;
-  padding: 10px 20px;
+  position: absolute;
+  top: 50px;
+  bottom: 0px;
+  width: 100%;
+
+  .main {
+    position: absolute;
+    left: 180px;
+    bottom: 0px;
+    width: calc(100% - 180px);
+    top: 0px;
+  }
 }

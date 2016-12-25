@@ -23,13 +23,18 @@ class Request {
   }
 
   static del(url, data) {
+    if (data) {
+      return fetch(url, {
+        method: 'Delete',
+        headers: {
+          Accept: 'application/json', 
+          'Content-Type': 'application/json',
+        },      
+        body: JSON.stringify(data),
+      });
+    }
     return fetch(url, {
-      method: 'Delete',
-      headers: {
-        Accept: 'application/json', 
-        'Content-Type': 'application/json',
-      },      
-      body: JSON.stringify(data),
+      method: 'Delete'
     });
   }
 }

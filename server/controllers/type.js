@@ -1,10 +1,11 @@
 import db from '../initial/mongodb';
 import Err from '../utils/Err';
+import mongoose from 'mongoose';
 const { Type } = db;
 
 const createType = async(ctx, next) => {
   const { name, description, language } = ctx.request.body;
-  const supportedLanguages = language.split(',');
+  const supportedLanguages = language.split(',').map(key => key.trim());
 
   let $type = Type.findOne({ name }).exec();
   const existingType = await $type;
@@ -36,7 +37,21 @@ const getType = async(ctx, next) => {
   });
 }
 
+const deleteType = async(ctx, next) => {
+  const typeId = ctx.params.typeId;
+
+  try {
+    await Type.remove({ _id: mongoose.Types.ObjectId(typeId)}).exec()
+
+    ctx.status = 204;    
+  } catch (err) {
+    console.error('err: ', err);
+    throw new Err('BAD-REQUEST', 'delete type');
+  }  
+}
+
 export default {
   createType,
   getType,
+  deleteType,
 };

@@ -1,0 +1,11 @@
+.side-bar {
+  position: fixed;
+  top: 50px;
+  width: 180px;
+  bottom: 0px;
+  background: #575252;  
+}
+
+.quick-links {
+  margin-top: 10px;
+}

@@ -22,8 +22,9 @@ const createOptions = async(ctx, next) => {
 const getOptions = async(ctx, next) => {
   const typeId = ctx.params.typeId;
   try {
-    ctx.body = await Option.find({ type: typeId }).exec();
+    ctx.body = await Option.find({ type: typeId }).populate('type').exec();
   } catch (err) {
+    console.error('err : ', err.stack);
     throw new Err('BAD-REQUEST', 'get options');
   }
 };

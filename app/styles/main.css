@@ -1,8 +1,7 @@
-@import './modules/card';
 @import './modules/app';
-@import './modules/main';
-@import './modules/footer';
 @import './modules/header';
+@import './modules/main';
+@import './modules/sidebar';
+@import './modules/question';
 
-@import './modules/questionnaire';
-@import './modules/questionnaire-card';
+@import './modules/href';

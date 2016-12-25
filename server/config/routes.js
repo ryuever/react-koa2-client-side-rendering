@@ -13,6 +13,7 @@ apiRouter.post('/questionnaire', Questionnaire.createQuestionnaire);
 
 apiRouter.post('/type', Type.createType);
 apiRouter.get('/type', Type.getType);
+apiRouter.del('/type/:typeId', Type.deleteType);
 
 apiRouter.post('/type/:typeId/options', Option.createOptions);
 apiRouter.get('/type/:typeId/options', Option.getOptions);
