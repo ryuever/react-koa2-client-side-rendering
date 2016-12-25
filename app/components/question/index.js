@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Modal, Form, FormField, Input, Radio } from 'react-eva';
+import { Card, Button, Modal, Form, FormField, Input, Checkbox } from 'react-eva';
 import * as actions from 'actions/question';
 
 export default class Question extends Component {
@@ -12,8 +12,9 @@ export default class Question extends Component {
     const blankContents = supportedLanguages.reduce((p, n) => ({
       ...p,
       [n]: {
-        title: n,
+        title: '',
         description: '',
+        options: [],
       },
     }), {});
 
@@ -24,26 +25,51 @@ export default class Question extends Component {
       action: 'add',
       content: blankContents,
     };
-    console.log('data : ', data);
 
     this.props.dispatch(actions.addQuestionGroup(data));
   }
 
-  handleInputChange() {
+  handleInputChange(e) {
+    const { 
+      question: { currentLang, currentId },
+      dispatch,
+    } = this.props;
+    console.log('current : ', currentLang, currentId, e.target.value);
+    // 如果说是default的话，那么就是保存optionId
+    // 如果说不是的话，    
+    const data = {
+      title: e.target.value,
+      currentId,
+      currentLang,
+    };
 
-  }
+    dispatch(actions.setQuestionTitle(data));
+  } 
 
-  handleOptionChange() {
+  handleOptionChange(value) {
+    const { 
+      question: { currentLang, currentId },
+      dispatch,
+    } = this.props;
+    console.log('current : ', currentLang, currentId, value);
+    // 如果说是default的话，那么就是保存optionId
+    // 如果说不是的话，    
+    const data = {
+      value,
+      currentId,
+      currentLang,
+    };
 
+    dispatch(actions.setChoosenDefault(data));
   }
 
   renderQuestionTemplate() {
     const { 
       option: { defaultOptions },
-      question: { currentLang },
+      question: { currentLang, currentId, editedQuestions },
     } = this.props;
     
-    if (defaultOptions.length === 0) {
+    if (defaultOptions.length === 0 || !currentLang) {
       return null;
     }
 
@@ -54,7 +80,7 @@ export default class Question extends Component {
         if (content[i].language === currentLang) {
           return {
             value: content[i]._id,
-            desc: content[i].description,
+            label: content[i].description,
           };
         }
       }
@@ -62,28 +88,34 @@ export default class Question extends Component {
 
     console.log('options : ', options);
 
+    const checkboxValues = editedQuestions[currentId].content[currentLang].options;
+    const inputValue = editedQuestions[currentId].content[currentLang].title;
+    console.log('check box values : ', checkboxValues, inputValue);
+
     return (
       <div className="">
         <Form>
           <FormField label="Name">
             <Input
               id="name" 
+              value={inputValue}
               onChange={::this.handleInputChange} />
           </FormField>
 
           <FormField>
-            <Radio.Group
+            <Checkbox.Group
+              value={checkboxValues || ''}
               onChange={::this.handleOptionChange}>
               {options.map(option => {
                 return (
-                  <Radio
+                  <Checkbox
                     key={option.value}
                     value={option.value}>
-                    {option.desc}
-                  </Radio>
+                    {option.label}
+                  </Checkbox>
                 );
               })}
-            </Radio.Group>          
+            </Checkbox.Group>          
           </FormField>
         </Form>
       </div>
@@ -105,18 +137,22 @@ export default class Question extends Component {
     );
   }
 
-  openQuestionBoard(lang) {
+  openQuestionBoard(lang, id) {
     console.log('open board : ', lang);
-    this.props.dispatch(actions.openQuestionModal(lang));
+    this.props.dispatch(actions.openQuestionModal({
+      lang, id
+    }));
   }
 
-  renderQuestion(content, lang) {
+  renderQuestion(p, lang) {
+    const id = p.id;
+    const content = p.content[lang];
     const { title, description } = content;
 
     return (
       <Card 
         key={lang}
-        onClick={this.openQuestionBoard.bind(this, lang)}
+        onClick={this.openQuestionBoard.bind(this, lang, id)}
         className="question-item"
         title={title}>
         {description || '点击以编辑'}
@@ -144,13 +180,14 @@ export default class Question extends Component {
     for (let k = len - 1; k >= 0; k--) {
       const key = keys[k];
       const q = mergedQuestions[key];
+      console.log('q : ', q);
 
       group.push(
         <Card 
           key={k}
           className="question-card">
           <div className="question-group">
-            {languages.map(lang => this.renderQuestion(q.content[lang], lang))}          
+            {languages.map(lang => this.renderQuestion(q, lang))}          
           </div>
         </Card>
       );

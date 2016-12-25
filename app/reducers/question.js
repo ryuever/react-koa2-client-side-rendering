@@ -8,27 +8,64 @@ const initialState = {
 
 const addQuestionGroup = (state, { payload }) => {
   const { editedQuestions } = state;
-  const { id, ...rest } = payload
-  const q = { ...editedQuestions, [id]: rest };
+  const { id } = payload
+  const q = { ...editedQuestions, [id]: payload };
   return {
     ...state,
     editedQuestions: q,
   };
 };
 
-const openQuestionModal = (state, { payload }) => ({
-  ...state,
-  questionBoardVisible: true,
-  currentLang: payload,
-});
+const openQuestionModal = (state, { payload }) => {
+  const { id, lang } = payload;
+  return {
+    ...state,
+    questionBoardVisible: true,
+    currentLang: lang,
+    currentId: id,
+  };
+};
 
-const setCurrentLang = (state, { payload }) => ({
-  ...state,
-  currentLang: payload,
-});
+const setQuestionTitle = (state, { payload }) => {
+  const { currentId, currentLang, title } = payload;
+  const { editedQuestions } = state;
+
+  editedQuestions[currentId].content = {
+    ...editedQuestions[currentId].content,
+    [currentLang]: {
+      ...editedQuestions[currentId].content[currentLang],
+      title,
+    },
+  };
+
+  return {
+    ...state,
+    editedQuestions,
+  };
+};
+
+const setChoosenDefault = (state, { payload }) => {
+  const { currentId, currentLang, value } = payload;
+  const { editedQuestions } = state;
+  
+  editedQuestions[currentId].content = {
+    ...editedQuestions[currentId].content,
+    [currentLang]: {
+      ...editedQuestions[currentId].content[currentLang],
+      options: value,
+    },
+  };
+
+  return {
+    ...state,
+    editedQuestions,
+  };
+};
 
 export default handleActions({
   [actions.addQuestionGroup]: addQuestionGroup,
   [actions.openQuestionModal]: openQuestionModal,
-  [actions.setCurrentLang]: setCurrentLang,
+
+  [actions.setQuestionTitle]: setQuestionTitle,
+  [actions.setChoosenDefault]: setChoosenDefault,
 }, initialState);
